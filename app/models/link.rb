@@ -5,15 +5,18 @@ class Link < ActiveRecord::Base
 
   def self.import!(uri)
     uri = expand(uri)
+    return nil unless uri.present?
+    return nil if EXCLUDES.include? uri.host
     found = where(url: uri.to_s).first
     return found if found.present?
-    return nil if EXCLUDES.include? uri.host
     return nil unless summary = summarize(uri.to_s)
     where(url: uri.to_s).first_or_create! summary
   end
 
   def self.expand(uri)
     HTTParty.head(uri).request.last_uri.tap { |u| u.fragment = u.query = nil }
+  rescue
+    nil
   end
 
   def self.summarize(url)
