@@ -17,7 +17,7 @@
   </div>
 
   <div class='news'>
-    <h2>Popular News</h2>
+    <h2>Notable News</h2>
     <% @list.links.each do |link| %>
       <div>
         <a class='headline' href="<%= link.url %>"><%= truncate link.title, length: 175, separator: ' ' %></a>
