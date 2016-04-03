@@ -15,6 +15,7 @@ class Link < ActiveRecord::Base
     query = { url: url, output: :json }
     result = HTTParty.get('http://textteaser.com/summary', query: query).parsed_response
     return nil if result['error'].present?
+    return nil unless result['sentences'].present?
     return nil unless sentence = result['sentences'].find { |s| s['order'] == 0 }
     { summary: sentence['sentence'], title: result['title'] }
   end

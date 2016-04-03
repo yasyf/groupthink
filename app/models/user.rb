@@ -21,7 +21,11 @@ class User < ActiveRecord::Base
     nil
   end
 
-  def sync(oldest = 2.weeks.ago, newest = DateTime.now, count = 200)
+  def schedule_sync!(oldest = 2.weeks.ago, newest = DateTime.now)
+    UserSyncWorker.perform_async id, oldest, newest
+  end
+
+  def sync!(oldest = 2.weeks.ago, newest = DateTime.now, count = 200)
     options = { include_rts: false, exclude_replies: true, count: count }
     if newest > self.newest
       self.newest = newest

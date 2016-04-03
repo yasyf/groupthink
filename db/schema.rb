@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402111950) do
+ActiveRecord::Schema.define(version: 20160403044954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,10 +47,12 @@ ActiveRecord::Schema.define(version: 20160402111950) do
   add_index "links_tweets", ["tweet_id", "link_id"], name: "index_links_tweets_on_tweet_id_and_link_id", using: :btree
 
   create_table "lists", force: :cascade do |t|
-    t.string   "username",   null: false
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "username",     null: false
+    t.string   "name",         null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.datetime "generated_at"
+    t.datetime "attempted_at"
   end
 
   add_index "lists", ["username", "name"], name: "index_lists_on_username_and_name", unique: true, using: :btree

@@ -6,6 +6,17 @@ class List < ActiveRecord::Base
     name.gsub('-', '_').titleize
   end
 
+  def ready?
+    generated_at.present? && generated_at > 1.week.ago
+  end
+
+  def exists?
+    return true
+    cached { twitter.list(username, name).present? }
+  rescue Twitter::Error::NotFound
+    false
+  end
+
   def users
     @users ||= cached do
       twitter.list_members(username, name).map do |user|
@@ -14,8 +25,12 @@ class List < ActiveRecord::Base
     end
   end
 
+  def schedule_sync!
+    ListSyncWorker.perform_async id
+  end
+
   def sync!
-    users.each(&:sync)
+    users.each(&:sync!)
   end
 
   def tweets(oldest = 2.weeks.ago, newest = DateTime.now)
@@ -35,7 +50,7 @@ class List < ActiveRecord::Base
                    .joins(:tweets)
                    .where('links_tweets.tweet_id' => tweets)
                    .group('links.id')
-                   .select('links.id, url, title, summary')
+                   .select('links.id, links.updated_at, url, title, summary')
                    .select('sum(tweets.retweets) as total_retweets')
                    .select('sum(tweets.favorites) as total_favorites')
                    .order('count(links.id) desc, total_retweets desc, total_favorites desc')
@@ -47,7 +62,7 @@ class List < ActiveRecord::Base
                          .joins(:tweets)
                          .where('hashtags_tweets.tweet_id' => tweets)
                          .group('hashtags.id')
-                         .select('hashtags.id, tag')
+                         .select('hashtags.id, hashtags.updated_at, tag')
                          .select('sum(tweets.retweets) as total_retweets')
                          .select('sum(tweets.favorites) as total_favorites')
                          .order('count(hashtags.id) desc, total_retweets desc, total_favorites desc')

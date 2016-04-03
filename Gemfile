@@ -35,6 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'twitter'
 gem 'sidekiq'
 gem 'httparty'
+gem 'sinatra', :require => nil
 
 group :production do
   gem 'rails_12factor'
