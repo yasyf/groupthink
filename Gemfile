@@ -36,6 +36,7 @@ gem 'twitter'
 gem 'sidekiq'
 gem 'httparty'
 gem 'sinatra', :require => nil
+gem 'puma'
 
 group :production do
   gem 'rails_12factor'
