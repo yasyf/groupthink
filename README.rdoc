@@ -1,5 +1,0 @@
-== GroupThink
-
-GroupThink sources news articles and trending topics from a community of Twitter users, displaying the results in a weekly digest.
-
-HackPrinceton Spring 2016
