@@ -2,6 +2,7 @@ class Link < ActiveRecord::Base
   has_and_belongs_to_many :tweets
 
   EXCLUDES = %w(twitter.com)
+  EXCEPTIONS = %w(youtube.com)
 
   def self.import!(uri)
     uri = expand(uri)
@@ -14,7 +15,11 @@ class Link < ActiveRecord::Base
   end
 
   def self.expand(uri)
-    HTTParty.head(uri).request.last_uri.tap { |u| u.fragment = u.query = nil }
+    HTTParty.head(uri).request.last_uri.tap do |u|
+      unless EXCEPTIONS.include?(u.host)
+        u.fragment = u.query = nil
+      end
+    end
   rescue
     nil
   end
