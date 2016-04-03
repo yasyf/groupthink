@@ -2,7 +2,7 @@ class Link < ActiveRecord::Base
   has_and_belongs_to_many :tweets
 
   EXCLUDES = %w(twitter.com).flat_map { |host| [host, "www.#{host}"] }
-  EXCEPTIONS = %w(youtube.com).flat_map { |host| [host, "www.#{host}"] }
+  EXCEPTIONS = %w(youtube.com facebook.com).flat_map { |host| [host, "www.#{host}"] }
 
   def self.import!(uri)
     uri = expand(uri)
