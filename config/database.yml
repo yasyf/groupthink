@@ -84,4 +84,4 @@ production:
   username: group_think
   password: <%= ENV['GROUP_THINK_DATABASE_PASSWORD'] %>
   url:  <%= ENV["DATABASE_URL"] %>
-  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 30 %>
+  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 20 %>
