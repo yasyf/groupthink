@@ -20,8 +20,8 @@
     <h2>Popular News</h2>
     <% @list.links.each do |link| %>
       <div>
-        <a class='headline' href="<%= link.url %>"><%= truncate link.title, length: 93, separator: ' ' %></a>
-        <p><%= link.summary %></p>
+        <a class='headline' href="<%= link.url %>"><%= truncate link.title, length: 175, separator: ' ' %></a>
+        <p><%= truncate link.summary, length: 400, separator: ' ' %></p>
       </div>
     <% end %>
   </div>

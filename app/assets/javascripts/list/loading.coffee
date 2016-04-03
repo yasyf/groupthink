@@ -1,9 +1,9 @@
-if $("#fakeloader").length > 0
-  checkStatus = ->
-    $.get("#{location.pathname}/status").then (response) ->
-      location.reload() if response.ready
+checkStatus = ->
+  $.get("#{location.pathname}/status").then (response) ->
+    location.reload() if response.ready
 
-  $(document).ready ->
+$(document).ready ->
+  if $("#fakeloader").length > 0
     $("#fakeloader").fakeLoader
       timeToHide: Math.pow(10, 10)
       spinner: 'spinner1'

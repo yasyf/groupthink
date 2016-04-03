@@ -6,6 +6,6 @@ class ListSyncWorker
     return if list.attempted_at.present? && list.attempted_at > 1.minute.ago
     list.update! attempted_at: DateTime.now
     list.users.each(&:schedule_sync!)
-    list.update! generated_at: 5.minutes.from_now
+    list.update! generated_at: DateTime.now
   end
 end
