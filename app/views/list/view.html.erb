@@ -31,7 +31,6 @@
     <% @list.hashtags.each do |hashtag| %>
       <div class='spaced'>
         <a class='user headline' href="https://twitter.com/search?q=%23<%= hashtag.tag %>">#<%= hashtag.tag %></a>
-        <!-- <%= render partial: "tweet", object: hashtag.most_recent %> -->
       </div>
     <% end %>
 
