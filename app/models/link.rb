@@ -29,7 +29,7 @@ class Link < ActiveRecord::Base
     result = HTTParty.get('http://textteaser.com/summary', query: query).parsed_response
     return nil if result['error'].present?
     return nil unless result['sentences'].present?
-    return nil unless sentence = result['sentences'].find { |s| s['order'] == 0 }
-    { summary: sentence['sentence'], title: result['title'] }
+    return nil unless sentence = result['sentences'].sort { |s| s['totalScore'] }
+    { summary: sentence.first(2).map { |s| s['sentence'] }.join(' '), title: result['title'] }
   end
 end
