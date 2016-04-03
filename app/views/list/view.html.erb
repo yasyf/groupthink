@@ -1,0 +1,50 @@
+<div class='newsletter'>
+  <h1>
+    <a class='title' href='https://twitter.com/<%= @list.username %>/lists/<%= @list.name %>'>
+      <%= @list.human_name %>
+    </a>
+    GroupThink
+  </h1>
+
+  <div>
+    <h2 class='toptweets'>Top Tweets</h2>
+    <h3><%= render partial: "user", object: @list.most_popular.first.user.full %> is killing it!</h3>
+    <% @list.most_popular.each do |tweet| %>
+      <div>
+        <%= render partial: "tweet", object: tweet.full %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class='news'>
+    <h2>Popular News</h2>
+    <% @list.links.each do |link| %>
+      <div>
+        <a class='headline' href="<%= link.url %>"><%= truncate link.title, length: 93, separator: ' ' %></a>
+        <p><%= link.summary %></p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class='hashtags'>
+    <h2>Trending Topics</h2>
+    <% @list.hashtags.each do |hashtag| %>
+      <div class='spaced'>
+        <a class='user headline' href="https://twitter.com/search?q=%23<%= hashtag.tag %>">#<%= hashtag.tag %></a>
+        <!-- <%= render partial: "tweet", object: hashtag.most_recent %> -->
+      </div>
+    <% end %>
+
+    <div height='10%;'></div>
+
+    <h2>Busy Bees</h2>
+    <% @list.active.each do |user| %>
+      <div>
+        <div class='headline spaced'><%= render partial: "user", object: user.full %></div>
+      </div>
+    <% end %>
+  </div>
+
+  <div style='clear: both;'></div>
+</div>
+

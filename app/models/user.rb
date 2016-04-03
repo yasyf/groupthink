@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include Concerns::Cacheable
   include Concerns::Twitterable
 
   has_many :tweets
@@ -38,5 +39,9 @@ class User < ActiveRecord::Base
     end
   rescue Twitter::Error::Unauthorized
     nil
+  end
+
+  def full
+    @full ||= cached { twitter.user(username) }
   end
 end

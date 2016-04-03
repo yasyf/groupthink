@@ -1,4 +1,5 @@
 class Tweet < ActiveRecord::Base
+  include Concerns::Cacheable
   include Concerns::Twitterable
 
   belongs_to :user
@@ -23,6 +24,6 @@ class Tweet < ActiveRecord::Base
   end
 
   def full
-    @full ||= twitter.status(identifier)
+    @full ||= cached { twitter.status(identifier) }
   end
 end

@@ -13,3 +13,44 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  font-family: 'Roboto', sans-serif;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  color: #1da1f2;
+}
+
+.toptweets {
+  margin-bottom: 0;
+}
+
+h3 {
+  margin-top: 0;
+  color: #8c9aa3;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.headline {
+  font-weight: bold;
+}
+
+.spaced {
+  padding-bottom: 5px;
+}
+
+.title, .user:hover {
+  color: #61b7ec;
+}
