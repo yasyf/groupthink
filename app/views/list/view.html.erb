@@ -8,7 +8,7 @@
 
   <div>
     <h2 class='toptweets'>Top Tweets</h2>
-    <h3><%= render partial: "user", object: @list.most_popular.first.user.full %> is killing it!</h3>
+    <h3><%= @list.most_popular.first.user.name %> is killing it!</h3>
     <% @list.most_popular.each do |tweet| %>
       <div>
         <%= render partial: "tweet", object: tweet.full %>
