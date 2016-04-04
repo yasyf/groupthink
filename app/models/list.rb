@@ -7,7 +7,7 @@ class List < ActiveRecord::Base
   end
 
   def ready?
-    generated_at.present? && generated_at > 1.week.ago
+    generated_at.present? && generated_at > 1.day.ago
   end
 
   def exists?
