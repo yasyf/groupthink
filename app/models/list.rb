@@ -33,7 +33,7 @@ class List < ActiveRecord::Base
     users.each(&:sync!)
   end
 
-  def tweets(oldest = 2.weeks.ago, newest = DateTime.now)
+  def tweets(oldest = 1.week.ago, newest = DateTime.now)
     @tweets ||= Tweet.includes(:user).where(user: users).where('posted_at > ?', oldest).where('posted_at < ?', newest)
   end
 
