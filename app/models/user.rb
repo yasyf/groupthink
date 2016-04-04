@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def sync!(oldest = 2.weeks.ago, newest = DateTime.now, count = 200)
-    options = { include_rts: false, exclude_replies: true, count: count }
+    options = { include_rts: true, exclude_replies: false, count: count }
     if newest > self.newest
       self.newest = newest
     else
