@@ -42,7 +42,7 @@ class List < ActiveRecord::Base
   end
 
   def most_popular(limit = 2)
-    @most_popular ||= tweets.order(retweets: :desc, favorites: :desc).limit(limit)
+    @most_popular ||= tweets.order(favorites: :desc, retweets: :desc).limit(limit)
   end
 
   def links(limit = 5)
@@ -53,7 +53,7 @@ class List < ActiveRecord::Base
                    .select('links.id, links.updated_at, url, title, summary')
                    .select('sum(tweets.retweets) as total_retweets')
                    .select('sum(tweets.favorites) as total_favorites')
-                   .order('count(links.id) desc, total_retweets desc, total_favorites desc')
+                   .order('count(links.id) desc, total_favorites desc, total_retweets desc')
                    .limit(limit)
   end
 
@@ -65,7 +65,7 @@ class List < ActiveRecord::Base
                          .select('hashtags.id, hashtags.updated_at, tag')
                          .select('sum(tweets.retweets) as total_retweets')
                          .select('sum(tweets.favorites) as total_favorites')
-                         .order('count(hashtags.id) desc, total_retweets desc, total_favorites desc')
+                         .order('count(hashtags.id) desc, total_favorites desc, total_retweets desc')
                          .limit(limit)
   end
 
